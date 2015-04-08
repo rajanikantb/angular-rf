@@ -26,13 +26,5 @@ DashboardModule.controller('DashboardController',
                         $scope.statusMessage = "Error Occured. Please try again";
                     });
 
-
-//                    $http.jsonp($scope.url, $scope.loginItem).
-//                            success(function(data) {
-//                                console.log(data);
-//                            }).
-//                            error(function(data) {
-//                                console.log(data)
-//                            });
                 };
             }]);
