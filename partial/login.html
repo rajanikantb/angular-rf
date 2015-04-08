@@ -1,0 +1,20 @@
+<html>
+    <body>
+        <section class="" ng-controller="DashboardController">
+            <form role="form">
+                <div class="form-group">
+                    <label class="control-label required" for="username">Email address<span class="warn">*</span></label>
+                    <input type="text" placeholder="Enter email" class="form-control" value="" name="username" ng-model="loginItem.username">
+                </div>
+                <div class="form-group">
+                    <label class="control-label required" for="password">Password<span class="warn">*</span></label>
+                    <input type="password" placeholder="Password" class="form-control" value="" name="password" ng-model="loginItem.password">
+                </div>
+                <button class="btn btn-success" type="submit" id="sign_in" name="sign_in" ng-click="login()">Login</button>
+                <div>
+                    {{statusMessage}}
+                </div>
+            </form>
+        </section>
+    </body>
+</html>
