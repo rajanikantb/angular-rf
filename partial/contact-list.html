@@ -1,0 +1,54 @@
+<section class="widget">
+    <div ng-if="contact.load">
+        <!--<table class="table" ng-if="contact.load">
+            <thead>
+                <tr>
+                    <th>optInDate</th>
+                    <th>firstName</th>
+                    <th>lastName</th>
+                    <th>email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="contacts in contact.items">
+                    <td><span ng-if="contacts.optInDate">
+                            {{contacts.optInDate}}</span>
+                        <span ng-if="!contacts.optInDate">Not found</span>
+                    </td>
+                    <td><span ng-if="contacts.firstName">
+                            {{contacts.firstName}}</span>
+                        <span ng-if="!contacts.firstName">Not found</span>
+                    </td>
+                    <td><span ng-if="contacts.lastName">
+                            {{contacts.lastName}}</span>
+                        <span ng-if="!contacts.lastName">Not found</span>
+                    </td>
+                    <td><span ng-if="contacts.email">
+                            {{contacts.email}}</span>
+                        <span ng-if="!contacts.email">Not found</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>-->
+
+        <p><strong>Filter:</strong> {{tableParams.filter()|json}}
+
+    <table ng-table="tableParams" show-filter="true" class="table">
+        <tr ng-repeat="contacts in $data">
+            <td data-title="'Optin Date'">
+                {{contacts.optInDate}}
+            </td>
+            <td data-title="'First Name'" filter="{ 'firstName': 'text' }">
+                {{contacts.firstName}}
+            </td>
+            <td data-title="'Last Name'" filter="{ 'lastName': 'text' }">
+                {{contacts.lastName}}
+            </td>
+            <td data-title="'Email'" filter="{ 'email': 'text' }">
+                {{contacts.email}}
+            </td>
+        </tr>
+    </table>
+
+    </div>
+</section>

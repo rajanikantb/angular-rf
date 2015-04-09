@@ -1,7 +1,11 @@
 <html>
     <body>
-        <section class="" ng-controller="DashboardController">
-            {{statusMessage}}
+        <section class="" ng-controller="DashboardMainController">
+
+           <button class="btn btn-success" type="button" id="sign_in" name="sign_in" ng-click="getContact()">Get System Email</button>
+           <button class="btn btn-success" type="button" id="sign_in" name="sign_in" ng-click="logout()">Logout</button>
+
+            <div ng-include src="'../partial/contact-list.html'"></div>
         </section>
     </body>
 </html>
