@@ -7,17 +7,15 @@ DashboardModule.controller('DashboardController',
             '$location',
             '$window',
             '$appConstant',
-            function ($scope, $http, $location, $window, $appConstant) {
-                $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8";
+            function($scope, $http, $location, $window, $appConstant) {
                 $scope.url = $appConstant.baseUrl + '/api/login';
                 $scope.loginItem = {};
-                $scope.login = function () {
+                $scope.login = function() {
                     $http({
                         url: $scope.url,
                         method: "POST",
-                        headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
                         data: $.param($scope.loginItem)
-                    }).success(function (data) {
+                    }).success(function(data) {
                         var $response = data.response;
                         if ("true" == $response.status) {
                             $scope.statusMessage = 'User logged in sucessfully';
@@ -27,7 +25,7 @@ DashboardModule.controller('DashboardController',
                         } else {
                             $scope.statusMessage = $response.errorMessage;
                         }
-                    }).error(function (data) {
+                    }).error(function(data) {
                         $scope.statusMessage = "Error Occured. Please try again";
                     });
 
@@ -43,24 +41,23 @@ DashboardModule.controller('DashboardMainController',
             '$filter',
             'ngTableParams',
             '$appConstant',
-            function ($scope, $http, $location, $window, $filter, ngTableParams, $appConstant) {
-                $scope.logout = function () {
+            function($scope, $http, $location, $window, $filter, ngTableParams, $appConstant) {
+                $scope.logout = function() {
                     $location.path('/login');
                 }
                 $scope.contact = {};
                 $scope.contact.load = false;
 
-                $scope.getContact = function () {
+                $scope.getContact = function() {
                     var userId = $window.sessionStorage.userId;
                     var apiKey = $window.sessionStorage.apiKey;
 
                     $http({
                         method: 'POST',
-                        url: $appConstant.baseUrl +'/api/account-contact/get-contact',
-                        headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+                        url: $appConstant.baseUrl + '/api/account-contact/get-contact',
                         data: $.param({userId: userId, accessToken: apiKey})
                     }).
-                            success(function (data) {
+                            success(function(data) {
                                 $scope.contact.load = true;
                                 $scope.contact.items = data.response.content.contacts;
 
@@ -69,7 +66,7 @@ DashboardModule.controller('DashboardMainController',
                                     count: 10
                                 }, {
                                     total: data.response.content.contacts.length, // length of data
-                                    getData: function ($defer, params) {
+                                    getData: function($defer, params) {
                                         // use build-in angular filter
                                         var orderedData = params.filter() ?
                                                 $filter('filter')(data.response.content.contacts, params.filter()) :
@@ -83,7 +80,7 @@ DashboardModule.controller('DashboardMainController',
                                 });
 
                             }).
-                            error(function (data) {
+                            error(function(data) {
                                 console.log(data);
                             });
                 };
