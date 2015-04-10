@@ -14,7 +14,7 @@ DashboardModule.controller('DashboardController',
                     $http({
                         url: $scope.url,
                         method: "POST",
-                        data: $.param($scope.loginItem)
+                        params: $scope.loginItem
                     }).success(function(data) {
                         var $response = data.response;
                         if ("true" == $response.status) {
@@ -54,11 +54,10 @@ DashboardModule.controller('DashboardMainController',
                     $http({
                         method: 'POST',
                         url: $appConstant.serverUrl + '/api/account-contact/get-contact',
-                        data: $.param({userId: userId, accessToken: apiKey})
+                        params: {userId: userId, accessToken: apiKey}
                     }).success(function(data) {
                         $scope.contact.load = true;
                         $scope.contact.items = data.response.content.contacts;
-
                         $scope.tableParams = new ngTableParams({
                             page: 1, // show first page
                             count: 10
