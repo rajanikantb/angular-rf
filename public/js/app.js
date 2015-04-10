@@ -23,3 +23,8 @@ app.config(['$routeProvider',
         });
     }]);
 
+app.constant('$appConstant',
+    {
+        ver: '1.0.0',
+        baseUrl: 'http://raj.rapidfunnel.com'
+    });

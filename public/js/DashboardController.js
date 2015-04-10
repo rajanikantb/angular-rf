@@ -6,9 +6,10 @@ DashboardModule.controller('DashboardController',
             '$http',
             '$location',
             '$window',
-            function ($scope, $http, $location, $window) {
+            '$appConstant',
+            function ($scope, $http, $location, $window, $appConstant) {
                 $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8";
-                $scope.url = 'http://san.rapidfunnel.com/api/login';
+                $scope.url = $appConstant.baseUrl + '/api/login';
                 $scope.loginItem = {};
                 $scope.login = function () {
                     $http({
@@ -41,11 +42,11 @@ DashboardModule.controller('DashboardMainController',
             '$window',
             '$filter',
             'ngTableParams',
-            function ($scope, $http, $location, $window, $filter, ngTableParams) {
+            '$appConstant',
+            function ($scope, $http, $location, $window, $filter, ngTableParams, $appConstant) {
                 $scope.logout = function () {
                     $location.path('/login');
                 }
-
                 $scope.contact = {};
                 $scope.contact.load = false;
 
@@ -55,7 +56,7 @@ DashboardModule.controller('DashboardMainController',
 
                     $http({
                         method: 'POST',
-                        url: 'http://san.rapidfunnel.com/api/account-contact/get-contact',
+                        url: $appConstant.baseUrl +'/api/account-contact/get-contact',
                         headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
                         data: $.param({userId: userId, accessToken: apiKey})
                     }).
@@ -80,7 +81,6 @@ DashboardModule.controller('DashboardMainController',
                                         $defer.resolve($scope.contacts);
                                     }
                                 });
-
 
                             }).
                             error(function (data) {
