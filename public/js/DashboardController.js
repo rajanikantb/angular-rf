@@ -8,7 +8,7 @@ DashboardModule.controller('DashboardController',
             '$window',
             '$appConstant',
             function($scope, $http, $location, $window, $appConstant) {
-                $scope.url = $appConstant.baseUrl + '/api/login';
+                $scope.url = $appConstant.serverUrl + '/api/login';
                 $scope.loginItem = {};
                 $scope.login = function() {
                     $http({
@@ -47,42 +47,37 @@ DashboardModule.controller('DashboardMainController',
                 }
                 $scope.contact = {};
                 $scope.contact.load = false;
-
                 $scope.getContact = function() {
                     var userId = $window.sessionStorage.userId;
                     var apiKey = $window.sessionStorage.apiKey;
 
                     $http({
                         method: 'POST',
-                        url: $appConstant.baseUrl + '/api/account-contact/get-contact',
+                        url: $appConstant.serverUrl + '/api/account-contact/get-contact',
                         data: $.param({userId: userId, accessToken: apiKey})
-                    }).
-                            success(function(data) {
-                                $scope.contact.load = true;
-                                $scope.contact.items = data.response.content.contacts;
+                    }).success(function(data) {
+                        $scope.contact.load = true;
+                        $scope.contact.items = data.response.content.contacts;
 
-                                $scope.tableParams = new ngTableParams({
-                                    page: 1, // show first page
-                                    count: 10
-                                }, {
-                                    total: data.response.content.contacts.length, // length of data
-                                    getData: function($defer, params) {
-                                        // use build-in angular filter
-                                        var orderedData = params.filter() ?
-                                                $filter('filter')(data.response.content.contacts, params.filter()) :
-                                                data.response.content.contacts;
+                        $scope.tableParams = new ngTableParams({
+                            page: 1, // show first page
+                            count: 10
+                        }, {
+                            total: data.response.content.contacts.length, // length of data
+                            getData: function($defer, params) {
+                                // use build-in angular filter
+                                var orderedData = params.filter() ?
+                                        $filter('filter')(data.response.content.contacts, params.filter()) :
+                                        data.response.content.contacts;
 
-                                        $scope.contacts = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                                $scope.contacts = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
 
-                                        params.total(orderedData.length); // set total for recalc pagination
-                                        $defer.resolve($scope.contacts);
-                                    }
-                                });
-
-                            }).
-                            error(function(data) {
-                                console.log(data);
-                            });
+                                params.total(orderedData.length); // set total for recalc pagination
+                                $defer.resolve($scope.contacts);
+                            }
+                        });
+                    }).error(function(data) {
+                        console.log(data);
+                    });
                 };
-
             }]);
