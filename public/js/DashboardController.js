@@ -14,16 +14,16 @@ DashboardModule.controller('DashboardController',
                     $http({
                         url: $scope.url,
                         method: "POST",
-                        params: $scope.loginItem
+                        data: $.param($scope.loginItem)
                     }).success(function(data) {
                         var $response = data.response;
                         if ("true" == $response.status) {
-                            $scope.statusMessage = 'User logged in sucessfully';
+                            $scope.statusMessage = angular.lowercase('User logged in sucessfully');
                             $window.sessionStorage.userId = data.response.content.userId;
                             $window.sessionStorage.apiKey = data.response.content.accessToken;
                             $location.path('/dashboard');
                         } else {
-                            $scope.statusMessage = $response.errorMessage;
+                            $scope.statusMessage = angular.lowercase($response.errorMessage);
                         }
                     }).error(function(data) {
                         $scope.statusMessage = "Error Occured. Please try again";
@@ -54,7 +54,7 @@ DashboardModule.controller('DashboardMainController',
                     $http({
                         method: 'POST',
                         url: $appConstant.serverUrl + '/api/account-contact/get-contact',
-                        params: {userId: userId, accessToken: apiKey}
+                        data: $.param({userId: userId, accessToken: apiKey})
                     }).success(function(data) {
                         $scope.contact.load = true;
                         $scope.contact.items = data.response.content.contacts;
